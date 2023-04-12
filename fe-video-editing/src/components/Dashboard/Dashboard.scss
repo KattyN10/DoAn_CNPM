@@ -1,0 +1,42 @@
+.container-content{
+    .content-heading{
+        font-weight: 300;
+        font-size: 36px;
+        line-height: 54px;
+    }
+    .sort-list{
+        margin-top: 20px;
+        margin-left: 60px;
+        select{
+            width: 130px;
+            height: 30px;
+            color: #FFF9F9;
+            background: #080D76;
+            border-radius: 20px;
+        }
+    }
+    .content-title{
+        display: flex;
+        justify-content: center;
+        .title{
+            font-weight: 300;
+            font-size: 36px;
+            line-height: 54px;
+        }
+    }
+    .content-view{
+        width: 900px;
+        height: 450px;
+        margin: 0 auto;
+        background: #221E3D;
+        border-radius: 20px;
+        color: white;
+    }
+    .download-item{
+        width: 140px;
+        height: 30px;
+        margin-right: 150px;
+        background: #3D3476;
+        border-radius: 10px;
+    }
+}

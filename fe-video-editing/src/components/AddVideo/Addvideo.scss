@@ -1,0 +1,60 @@
+.content-add-video{
+    .view-upload{
+        width: 500px;
+        height: 340px;
+        margin: 20px auto;
+        background: #221E3D;
+        border-radius: 20px;
+        .title-upload{
+            width: 500px;
+            height: 60px;
+            background: #3D3476;
+            border-radius: 20px;
+            p{
+                font-weight: 300;
+                font-size: 24px;
+                line-height: 50px;
+            }
+        }
+        .body-upload{
+            
+            .input-name{
+                width: 370px;
+                height: 40px;
+                margin: 0 auto;
+            }
+            .input-select{
+                margin-top: 20px;
+                margin-left: 150px;
+                .text-label{
+                    font-weight: 300;
+                    font-size: 30px;
+                    line-height: 35px;
+                }
+                .select-type{
+                    width: 100px;
+                    height: 40px;
+                    margin-left: 20px;
+                    background: #FFFFFF;
+                    border-radius: 20px;
+                }
+            }
+            .upload-item{
+                margin: 50px auto;
+                width: 350px;
+                height: 40px;
+                background: #FFFFFF;
+                border-radius: 20px;
+                font-weight: 300;
+                font-size: 15px;
+                line-height: 35px;
+                    /* identical to box height */
+
+                text-align: center;
+
+                color: #000000;
+
+            }
+        }
+    }
+}

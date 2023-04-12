@@ -1,0 +1,74 @@
+.container-content-highlight{
+    .content-heading{
+        font-weight: 300;
+        font-size: 36px;
+        line-height: 54px;
+    }
+    .content-title{
+        font-style: normal;
+        font-weight: 300;
+        font-size: 24px;
+        line-height: 36px;
+    }
+    .footer-highlight{
+        margin: 0 auto;
+        .input-group-text{
+            background-color: #221E3D;
+            color: aliceblue;
+        }
+        .submit-done{
+            margin-top: 5px;
+            width: 100px;
+            height: 30px;
+
+            background: #3D3476;
+            border-radius: 10px;
+        }
+    }
+    .container-list{
+        margin-left: 20px;
+        margin-right: 20px;
+        .row{
+            height: 400px;
+            background-color:  #221E3D;
+            border-radius: 10px;
+        }
+        .card{
+            width: 200px;
+            height: 160px;
+            background: #3D3476;
+            border-radius: 10px;
+            margin-left: 20px;
+            margin-top: 15px;
+            .heading-card{
+                display: flex;
+                justify-content: space-between;
+                .select{
+                    input{
+                        width: 20px;
+                        height: 20px;
+                        margin-top: 10px;
+                        margin-left: 10px;
+                        border-radius: 10px;
+                    }
+                }
+                .item{
+                    display: flex;
+                    margin-top: 10px;
+                    margin-right: 10px;
+                }
+            }
+            .body-card{
+                width: 150px;
+                height: 120px;
+                margin-top: 15px;
+                margin-left: 20px;
+                background-color: antiquewhite;
+                border-radius: 10px;
+            }
+            .footer-card{
+                margin: 0  auto;
+            }
+        }
+    }
+}
