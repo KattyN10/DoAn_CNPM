@@ -44,8 +44,7 @@ class Home extends React.Component{
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="#/action-1">Account</Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">Setting</Dropdown.Item>
+                                <Dropdown.Item href="/">Gallery</Dropdown.Item>
                                 <Dropdown.Item href="/highlight">Highlight</Dropdown.Item>
                                 <Dropdown.Item href="/dashboard">Dashboard</Dropdown.Item>
                                 <Dropdown.Item href="/login">Logout</Dropdown.Item>
@@ -54,22 +53,22 @@ class Home extends React.Component{
                 </div>
                 </div>
                 <BrowserRouter>
-                <div className="home-container mt-4">
                 <Switch>
-                <Route path="/login">
-                    <Login/>
-                </Route>
+                <div className="home-container mt-4">
                 <Route path="/highlight">
                     <Highlight/>
                 </Route>
-                <Route path="/dashboard" exact>
+                <Route path="/login">
+                    <Login/>
+                </Route>
+                <Route path="/dashboard">
                     <Dashboard/>
                 </Route>
                 <Route path="/" exact>
                     <Gallery/>
                 </Route>
-                </Switch>
                 </div>
+                </Switch>
                 </BrowserRouter>
 
             </div>
