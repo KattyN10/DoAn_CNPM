@@ -15,19 +15,24 @@ import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+     
       <Switch>
           <Route path="/login">
-          <Login/>
+          <div className="App">
+              <Login/>  
+          </div>
           </Route>
           <Route path="/register">
-          <SignUp/>
+          <div className="App">
+              <SignUp/>  
+          </div>
           </Route>
+          <Home/>
           <Route path="/" exact>
-            <Home />
+          <div className="App">  
+          </div>
           </Route>
         </Switch>
-    </div>
     </BrowserRouter>
   );
 }
