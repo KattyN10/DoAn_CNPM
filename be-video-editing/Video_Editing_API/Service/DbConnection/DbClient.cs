@@ -11,12 +11,12 @@ namespace Video_Editing_API.Service.DbConnection
     public class DbClient : IDbClient
     {
         private readonly IMongoCollection<AppUser> _user;
-        public DbClient(IOptions<DbConfig> dbConfig)
+
+        public DbClient()
         {
-          
-            var client = new MongoClient(dbConfig.Value.Connection_String);
-            var database = client.GetDatabase(dbConfig.Value.Database_Name);
-            _user = database.GetCollection<AppUser>(dbConfig.Value.User_Collection_Name);
+            var client = new MongoClient("mongodb+srv://phucnguyen:26102002@cluster0.fh28jr0.mongodb.net/test");
+            var database = client.GetDatabase("Video-Editing");
+            _user = database.GetCollection<AppUser>("User");
         }
 
         public IMongoCollection<AppUser> GetUserCollection()

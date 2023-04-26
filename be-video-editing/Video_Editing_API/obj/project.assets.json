@@ -1930,11 +1930,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\Video_Editing_API.csproj",
+      "projectUniqueName": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\Video_Editing_API.csproj",
       "projectName": "Video_Editing_API",
-      "projectPath": "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\Video_Editing_API.csproj",
+      "projectPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\Video_Editing_API.csproj",
       "packagesPath": "C:\\Users\\truon\\.nuget\\packages\\",
-      "outputPath": "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\obj\\",
+      "outputPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

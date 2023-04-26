@@ -56,9 +56,14 @@ namespace Video_Editing_API.Service
             } 
         }
 
-        public AppUser Register(RegisterModel userRegister)
+        public void Register(RegisterModel userRegister)
         {
-            var existingUser = GetUser(userRegister.Username);
+            AppUser user = new AppUser();
+            user.Username = userRegister.Username;
+            user.Password = userRegister.Password;
+            user.Fullname = userRegister.Fullname;
+            user.Email = userRegister.Email;
+            var existingUser = GetUser(user.Username);
 
             if (existingUser != null)
             {
@@ -66,9 +71,8 @@ namespace Video_Editing_API.Service
             }
             else
             {
-                AddUser(existingUser);
+                AddUser(user);
             }
-            return existingUser;
         }
     }
 }

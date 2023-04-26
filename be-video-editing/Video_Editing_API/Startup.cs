@@ -33,7 +33,6 @@ namespace Video_Editing_API
 
             services.AddScoped<IUserService, UserService>();
            
-            services.Configure<DbConfig>(Configuration);
             services.AddSingleton<IDbClient, DbClient>();
             
 

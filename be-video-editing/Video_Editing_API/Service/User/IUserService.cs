@@ -14,7 +14,7 @@ namespace Video_Editing_API.Service
         void RemoveUser(string id);
 
         AppUser Authenticate(LoginModel user);
-        AppUser Register(RegisterModel user);
+        void Register(RegisterModel user);
        
     }
 }
