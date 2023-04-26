@@ -1,10 +1,12 @@
 ﻿using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDbGenericRepository.Attributes;
 using System;
 
 namespace Video_Editing_API
 {
-    public class AppUser: MongoIdentityUser<Guid>
+    [CollectionName("User")]
+    public class AppUser
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
@@ -13,6 +15,5 @@ namespace Video_Editing_API
         public string Password { get; set; }
         public string Fullname { get; set; }
         public string Email { get; set; }
-        public int RoleID { get; set; }
     }
 }

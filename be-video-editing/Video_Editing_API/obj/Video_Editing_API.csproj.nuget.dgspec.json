@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\Video_Editing_API.csproj": {}
+    "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\Video_Editing_API.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\Video_Editing_API.csproj": {
+    "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\Video_Editing_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\Video_Editing_API.csproj",
+        "projectUniqueName": "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\Video_Editing_API.csproj",
         "projectName": "Video_Editing_API",
-        "projectPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\Video_Editing_API.csproj",
+        "projectPath": "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\Video_Editing_API.csproj",
         "packagesPath": "C:\\Users\\truon\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\Video_Editing_API\\obj\\",
+        "outputPath": "D:\\Nam3_HK2\\CongNghePhanMemHDT\\Video_Editing_API\\Video_Editing_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -48,17 +48,9 @@
               "target": "Package",
               "version": "[3.1.2, )"
             },
-            "Microsoft.Extensions.Options": {
-              "target": "Package",
-              "version": "[7.0.1, )"
-            },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[6.29.0, )"
-            },
-            "MongoDB.Bson": {
-              "target": "Package",
-              "version": "[2.19.1, )"
             },
             "MongoDB.Driver": {
               "target": "Package",

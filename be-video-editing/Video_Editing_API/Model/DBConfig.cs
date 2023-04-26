@@ -1,11 +1,14 @@
-﻿
-namespace Video_Editing_API
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Video_Editing_API.Model
 {
-    public class DBConfig
+    public class DbConfig
     {
-        public string Database_Name { get; set; }
-        public string User_Collection_Name { get; set; }
-        public string Connection_String { get; set; }
-        
+        public String Connection_String { get; set; }
+        public String Database_Name { get; set; }
+        public String User_Collection_Name { get; set; }
     }
 }

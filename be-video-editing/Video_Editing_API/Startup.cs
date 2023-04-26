@@ -1,13 +1,20 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using Video_Editing_API.Model.Collection;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Video_Editing_API.Model;
+using Video_Editing_API.Service;
+using Video_Editing_API.Service.DbConnection;
 
 namespace Video_Editing_API
 {
@@ -23,22 +30,14 @@ namespace Video_Editing_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region 
-            var mongoDbSettings = Configuration.GetSection(nameof(DBConfig)).Get<DBConfig>();
-            services.AddIdentity<AppUser, AppRole>()
-                .AddMongoDbStores<AppUser, AppRole, Guid>(mongoDbSettings.Connection_String, mongoDbSettings.Database_Name)
-                .AddDefaultTokenProviders();
-             
-            #endregion
 
-            services.AddTransient<UserManager<AppUser>,UserManager<AppUser>>();
-            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
-            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
-            services.AddTransient<IUserServices, UserServices>();
-
+            services.AddScoped<IUserService, UserService>();
+           
+            services.Configure<DbConfig>(Configuration);
             services.AddSingleton<IDbClient, DbClient>();
-            services.Configure<DBConfig>(Configuration);
             
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +54,8 @@ namespace Video_Editing_API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Video_Editing_API v1"));
             }
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 

@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("7f7f3910-057b-4165-922a-868032ddb475")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("02bcfe17-8957-4b34-b4a8-ef76e0aee9b8")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Video_Editing_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
