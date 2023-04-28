@@ -20,6 +20,7 @@ namespace Video_Editing_API
 {
     public class Startup
     {
+        private readonly string _myAllowSpecificOrigins = "AllowSpecficOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,11 +31,26 @@ namespace Video_Editing_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+            #region AddCors
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _myAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .SetIsOriginAllowed(origin => true) // allow any origin
+                        .AllowCredentials()
+                        .WithExposedHeaders("Content-Disposition");
+                    });
+            });
+            #endregion
 
             services.AddScoped<IUserService, UserService>();
-           
             services.AddSingleton<IDbClient, DbClient>();
-            
+
 
 
             services.AddControllers();
@@ -50,6 +66,7 @@ namespace Video_Editing_API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(_myAllowSpecificOrigins);
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Video_Editing_API v1"));
             }
@@ -67,5 +84,6 @@ namespace Video_Editing_API
                 endpoints.MapControllers();
             });
         }
+  
     }
 }

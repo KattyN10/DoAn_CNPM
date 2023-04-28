@@ -7,31 +7,10 @@
     .home-container{
         width: 1200px;
         height: 700px;
-        margin: 50px auto;
+        margin: 30px auto;
 
         background: #13132B;
         border-radius: 40px;
     }
-    .home-heading{
-        margin-top: 30px;
-        display: flex;
-        justify-content:space-around;
-        .home-heading-control{
-            display: flex;
-            justify-content: space-around;
-            .home-heading-logo-user{
-                font-size: 40px;
-             }
-        }
-        .home-heading-title{
-            font-family: 'Poppins';
-            font-weight: 300;
-            font-size: 50px;
-            line-height: 72px;
-        }
-        .home-heading-logo{
-           font-size: 40px;
-        }
-        
-    }
+   
 }

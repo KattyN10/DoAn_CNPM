@@ -1,78 +1,128 @@
-import React from "react";
-import Gallery from "../Gallery/Gallery";
-import Dashboard from "../Dashboard/Dashboard";
-import Highlight from "../Highlight/Highlight";
-import {FaHome, FaUser,FaCogs} from "react-icons/fa"
-import Dropdown from 'react-bootstrap/Dropdown';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { experimentalStyled as styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 import './Home.scss';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-    
-} from "react-router-dom";
-import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
-import Login from "../Login/Login";
-class Home extends React.Component{
-    
-    render(){
-        const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-            <i
-                className="home-heading-logo-user"
-              onClick={(e) => {
-                e.preventDefault();
-                onClick(e);
-              }}
-            >
-              {children}
-             
-            </i>
-          ));
-    
-          
-        return(
-            <div className="home-background">
-               <div className="home-heading">
-                <div className="home-heading-logo"><FaHome/></div>
-                <div className="home-heading-title">Video Management</div>
-                <div className="home-heading-control">
-                    <div className="">Admin <i className="home-heading-logo-user ms-2"><FaUser/></i></div>
-                        <Dropdown>
-                            <Dropdown.Toggle as={CustomToggle}  aria-controls="navbar-dark-example">
-                            <FaCogs/>
-                            </Dropdown.Toggle>
+import Gallery from '../Gallery/Gallery';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import Dashboard from '../Dashboard/Dashboard';
+import Highlight from '../Highlight/Highlight';
 
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/">Gallery</Dropdown.Item>
-                                <Dropdown.Item href="/highlight">Highlight</Dropdown.Item>
-                                <Dropdown.Item href="/dashboard">Dashboard</Dropdown.Item>
-                                <Dropdown.Item href="/login">Logout</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                </div>
-                </div>
-                <BrowserRouter>
-                <Switch>
-                <div className="home-container mt-4">
-                <Route path="/highlight">
-                    <Highlight/>
-                </Route>
-                <Route path="/login">
-                    <Login/>
-                </Route>
-                <Route path="/dashboard">
-                    <Dashboard/>
-                </Route>
-                <Route path="/" exact>
-                    <Gallery/>
-                </Route>
-                </div>
-                </Switch>
-                </BrowserRouter>
 
-            </div>
-        )
+
+const theme = createTheme({
+    palette: {
+        primary: {
+          light: '#FFFBFB',
+          main: '#221E3D',
+          dark: '#282828',
+          back:'#282828',
+          contrastText: '#fff',
+        },
     }
+});
+const CustomExpand = React.forwardRef(({ children, onClick }, ref) => (
+    <i
+        type="button"
+        className="extension ms-4"
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+     
+    </i>
+  ));
+
+
+function Home()
+{
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+ 
+    return(
+        <ThemeProvider theme={theme}>
+        <Container className='home-background'>
+          <Grid container mt={5}>
+                <Grid item xs={2} sm={4} md={4}>
+                   <HomeIcon sx={{ fontSize: 60 }} />
+                </Grid>
+                 <Grid item xs={6} sm={4} md={4} 
+                 sx={{ fontSize: 40}}>
+                   Video Management
+                </Grid>
+                <Grid item xs={2} sm={4} md={4}>
+                <Grid
+                    container
+                    marginLeft={5}
+                    direction="row"
+                    justifyContent="flex-end"
+                    alignItems="center">
+                       <Avatar sx={{ width: 55, height: 55}}>
+                            <PersonIcon sx={{ fontSize: 55 }} />
+                        </Avatar>
+                        <Grid item  ml={5}>
+                            <SettingsIcon sx={{ fontSize: 60 }} 
+                            id="demo-positioned-button"
+                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                            />
+                            <Menu
+                              id="demo-positioned-menu"
+                              aria-labelledby="demo-positioned-button"
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                              anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                              transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                            >
+                              <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                              <MenuItem onClick={handleClose}>Gallery</MenuItem>
+                              <MenuItem onClick={handleClose}>Highlight</MenuItem>
+                              <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        </Menu>
+                        </Grid>
+                </Grid>
+                </Grid>
+            </Grid>  
+        <Box className="home-container">
+                <Gallery/>
+                {/* <Dashboard/> */}
+                {/* <Highlight/> */}
+        </Box>
+         
+        </Container>
+      </ThemeProvider>
+    );
 }
 export default Home;
