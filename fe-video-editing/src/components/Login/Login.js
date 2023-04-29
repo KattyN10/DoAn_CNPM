@@ -142,7 +142,7 @@ function Login() {
               </Button>
             <Typography align="center">
                 Don't have an account?
-                <Link href='/Register' variant='' ml={1}>
+                <Link href='/Signup' variant='' ml={1}>
                     Register
                 </Link>
             </Typography>

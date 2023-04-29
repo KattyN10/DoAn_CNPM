@@ -12,7 +12,7 @@ function RootRouter() {
     return (
       <>
         <Routes>
-          {/* <Route
+          <Route
             path="/login"
             element={<LoginPrivate element={<Login />} />}
             exact
@@ -21,7 +21,7 @@ function RootRouter() {
             path="/signUp"
             element={<LoginPrivate element={<SignUp />} />}
             exact
-          /> */}
+          />
           <Route
             path="/*"
             element={
