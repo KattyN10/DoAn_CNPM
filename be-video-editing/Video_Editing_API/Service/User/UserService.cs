@@ -42,9 +42,9 @@ namespace Video_Editing_API.Service
         }
 
 
-        public AppUser Authenticate(LoginModel userLogin)
+        public AppUser Authenticate(LoginModel account)
         {
-            var user = _user.Find(u => u.Username == userLogin.Username && u.Password == userLogin.Password)
+            var user = _user.Find(u => u.Username == account.Username && u.Password == account.Password)
                 .FirstOrDefault();
             if (user == null)
             {
@@ -56,13 +56,13 @@ namespace Video_Editing_API.Service
             } 
         }
 
-        public void Register(RegisterModel userRegister)
+        public void Register(RegisterModel account)
         {
             AppUser user = new AppUser();
-            user.Username = userRegister.Username;
-            user.Password = userRegister.Password;
-            user.Fullname = userRegister.Fullname;
-            user.Email = userRegister.Email;
+            user.Username = account.Username;
+            user.Password = account.Password;
+            user.Fullname = account.Fullname;
+            user.Email = account.Email;
             var existingUser = GetUser(user.Username);
 
             if (existingUser != null)

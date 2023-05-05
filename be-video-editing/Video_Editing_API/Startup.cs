@@ -14,7 +14,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Video_Editing_API.Model;
 using Video_Editing_API.Service;
+using Video_Editing_API.Service.Category;
 using Video_Editing_API.Service.DbConnection;
+using Video_Editing_API.Service.Tag;
 
 namespace Video_Editing_API
 {
@@ -48,8 +50,10 @@ namespace Video_Editing_API
             });
             #endregion
 
-            services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IDbClient, DbClient>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITagService, TagService>();
 
 
 

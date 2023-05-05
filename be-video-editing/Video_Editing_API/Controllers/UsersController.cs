@@ -29,9 +29,9 @@ namespace Video_Editing_API.Controllers
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]LoginModel userLogin)
+        public IActionResult Authenticate([FromBody]LoginModel account)
         {
-            var user = _userService.Authenticate(userLogin);
+            var user = _userService.Authenticate(account);
             if (user == null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -41,12 +41,12 @@ namespace Video_Editing_API.Controllers
         }  
 
         [HttpPost("register")]
-        public IActionResult Register([FromBody]RegisterModel userRegister)
+        public IActionResult Register([FromBody]RegisterModel account)
         {
             
             try
             {
-                _userService.Register(userRegister);
+                _userService.Register(account);
                 return Ok();
             }
             catch (ApplicationException ex)
