@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Video_Editing_API.Model.ViewModel;
+using video_editing_api.Model.ViewModel;
 
-namespace Video_Editing_API.Service
+namespace video_editing_api.Service
 {
     public interface IUserService
     {

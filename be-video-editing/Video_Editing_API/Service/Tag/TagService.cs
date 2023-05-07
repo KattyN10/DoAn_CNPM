@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Video_Editing_API.Service.DbConnection;
+using video_editing_api.Service.DbConnection;
 
-namespace Video_Editing_API.Service.Tag
+namespace video_editing_api.Service.Tag
 {
     public class TagService : ITagService
     {

@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using System;
 
-namespace Video_Editing_API
+namespace video_editing_api
 {
     [CollectionName("User")]
     public class AppUser

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Video_Editing_API.Model.Collection
+namespace video_editing_api.Model.Collection
 {
     [CollectionName("Category")]
     public class Category

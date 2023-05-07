@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Video_Editing_API.Model;
-using Video_Editing_API.Model.ViewModel;
-using Video_Editing_API.Service;
+using video_editing_api.Model;
+using video_editing_api.Model.ViewModel;
+using video_editing_api.Service;
 
-namespace Video_Editing_API.Controllers
+namespace video_editing_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

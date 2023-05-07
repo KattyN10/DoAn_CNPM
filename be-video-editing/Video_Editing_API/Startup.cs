@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,13 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Video_Editing_API.Model;
-using Video_Editing_API.Service;
-using Video_Editing_API.Service.Category;
-using Video_Editing_API.Service.DbConnection;
-using Video_Editing_API.Service.Tag;
+using video_editing_api.Service;
+using video_editing_api.Service.Category;
+using video_editing_api.Service.DbConnection;
+using video_editing_api.Service.Tag;
+using video_editing_api.Service.Video;
 
-namespace Video_Editing_API
+namespace video_editing_api
 {
     public class Startup
     {
@@ -54,13 +52,12 @@ namespace Video_Editing_API
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITagService, TagService>();
-
-
+            services.AddScoped<IVideoService, VideoService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Video_Editing_API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "video_editing_api", Version = "v1" });
             });
         }
 
@@ -72,9 +69,8 @@ namespace Video_Editing_API
                 app.UseDeveloperExceptionPage();
                 app.UseCors(_myAllowSpecificOrigins);
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Video_Editing_API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "video_editing_api v1"));
             }
-
             app.UseAuthentication();
 
             app.UseHttpsRedirection();
@@ -88,6 +84,5 @@ namespace Video_Editing_API
                 endpoints.MapControllers();
             });
         }
-  
     }
 }

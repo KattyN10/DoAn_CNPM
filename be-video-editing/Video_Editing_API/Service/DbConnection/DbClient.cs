@@ -4,16 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Video_Editing_API.Model;
-using Video_Editing_API.Model.Collection;
+using video_editing_api.Model;
+using video_editing_api.Model.Collection;
 
-namespace Video_Editing_API.Service.DbConnection
+namespace video_editing_api.Service.DbConnection
 {
     public class DbClient : IDbClient
     {
         private readonly IMongoCollection<AppUser> _user;
         private readonly IMongoCollection<Model.Collection.Category> _category;
         private readonly IMongoCollection<Model.Collection.Tag> _tag;
+        private readonly IMongoCollection<Model.Collection.Video> _video;
 
         public DbClient()
         {
@@ -23,6 +24,7 @@ namespace Video_Editing_API.Service.DbConnection
             _user = database.GetCollection<AppUser>("User");
             _category = database.GetCollection<Model.Collection.Category>("Category");
             _tag = database.GetCollection<Model.Collection.Tag>("Tag");
+            _video = database.GetCollection<Model.Collection.Video>("Video");
         }
 
         public IMongoCollection<Model.Collection.Category> GetCategoryCollection()
@@ -40,6 +42,9 @@ namespace Video_Editing_API.Service.DbConnection
             return _user;
         }
 
-        
+        public IMongoCollection<Model.Collection.Video> GetVideoCollection()
+        {
+            return _video;
+        }
     }
 }

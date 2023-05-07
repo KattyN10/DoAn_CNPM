@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Video_Editing_API.Model.ViewModel
+namespace video_editing_api.Model.ViewModel
 {
     public class LoginModel
     {

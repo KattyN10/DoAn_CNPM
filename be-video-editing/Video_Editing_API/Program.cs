@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Video_Editing_API
+namespace video_editing_api
 {
     public class Program
     {

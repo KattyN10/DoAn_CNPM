@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Video_Editing_API.Service.Category;
+using video_editing_api.Service.Category;
 
-namespace Video_Editing_API.Controllers
+namespace video_editing_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

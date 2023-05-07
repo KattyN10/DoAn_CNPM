@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Video_Editing_API.Service.Tag
+namespace video_editing_api.Service.Tag
 {
     public interface ITagService
     {
