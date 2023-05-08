@@ -27,8 +27,8 @@ namespace video_editing_api.Controllers
         {
             IFormFile video = Request.Form.Files["video"];
             
-            //model.Username = User.Identity.Name;
-            //model.Filename = video.FileName;
+            model.Username = User.Identity.Name;
+            model.Filename = video.FileName;
             _videoService.AddVideo(model);
 
             return RedirectToAction("Display");
