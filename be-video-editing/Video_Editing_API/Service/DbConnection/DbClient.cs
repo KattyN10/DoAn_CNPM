@@ -13,7 +13,6 @@ namespace video_editing_api.Service.DbConnection
     {
         private readonly IMongoCollection<AppUser> _user;
         private readonly IMongoCollection<Model.Collection.Category> _category;
-        private readonly IMongoCollection<Model.Collection.Tag> _tag;
         private readonly IMongoCollection<Model.Collection.Video> _video;
 
         public DbClient()
@@ -23,18 +22,12 @@ namespace video_editing_api.Service.DbConnection
 
             _user = database.GetCollection<AppUser>("User");
             _category = database.GetCollection<Model.Collection.Category>("Category");
-            _tag = database.GetCollection<Model.Collection.Tag>("Tag");
             _video = database.GetCollection<Model.Collection.Video>("Video");
         }
 
         public IMongoCollection<Model.Collection.Category> GetCategoryCollection()
         {
             return _category;
-        }
-
-        public IMongoCollection<Model.Collection.Tag> GetTagCollection()
-        {
-            return _tag;
         }
 
         public IMongoCollection<AppUser> GetUserCollection()

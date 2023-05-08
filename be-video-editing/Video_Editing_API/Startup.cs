@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using video_editing_api.Service;
 using video_editing_api.Service.Category;
 using video_editing_api.Service.DbConnection;
-using video_editing_api.Service.Tag;
 using video_editing_api.Service.Video;
 
 namespace video_editing_api
@@ -51,7 +50,6 @@ namespace video_editing_api
             services.AddSingleton<IDbClient, DbClient>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ITagService, TagService>();
             services.AddScoped<IVideoService, VideoService>();
 
             services.AddControllers();

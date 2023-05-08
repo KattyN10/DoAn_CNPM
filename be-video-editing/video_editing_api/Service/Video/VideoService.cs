@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using video_editing_api.Model.ViewModel;
 using video_editing_api.Service.DbConnection;
 
 namespace video_editing_api.Service.Video
@@ -16,13 +17,18 @@ namespace video_editing_api.Service.Video
             _video = dbClient.GetVideoCollection();
         }
 
-        public List<Model.Collection.Video> GetListVideo()
+        public List<Model.Collection.Video> GetListVideo(string username)
         {
-            return _video.Find(v => true).ToList();
+            return _video.Find(v => v.Username == username).ToList();
         }
 
-        public void AddVideo(Model.Collection.Video video)
+        public void AddVideo(VideoModel model)
         {
+            Model.Collection.Video video = new Model.Collection.Video();
+            video.Title = model.Title;
+            video.Username = model.Username;
+            video.Filename = model.Filename;
+            video.CatName = model.CatName;
             _video.InsertOne(video);
         }
 
@@ -31,9 +37,5 @@ namespace video_editing_api.Service.Video
             _video.DeleteOne(v => v.ID == id);
         }
 
-        public Model.Collection.Video GetById(string id)
-        {
-            return _video.Find<Model.Collection.Video>(v => v.ID == id).FirstOrDefault();
-        }
     }
 }

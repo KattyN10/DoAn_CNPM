@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RNwnc0pV7j/+ZIQuzpGREMoM0VMhcxrSOnNtVnn4O0EAFLNg40D0xgNhIolCVd1jyTyR7QL3MnCTTe4qrrp9qw==",
+  "dgSpecHash": "jw30wMHB2BrtqSWI1OUK4nctSdloKtBsC6Rc570jmJrC6oTpO+N7WFplWQuEIGqYbNWHGcPcg8VbTrm6f4idHg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\truon\\OneDrive\\Máy tính\\video_editing_api\\video_editing_api\\video_editing_api.csproj",
+  "projectFilePath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\truon\\.nuget\\packages\\aspnetcore.identity.mongodbcore\\3.1.2\\aspnetcore.identity.mongodbcore.3.1.2.nupkg.sha512",
     "C:\\Users\\truon\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",

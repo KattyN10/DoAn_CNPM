@@ -13,11 +13,9 @@ namespace video_editing_api.Model.Collection
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string ID { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string CatID { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual ICollection<Tag> tags { get; set; }
+        public string Title { get; set; }
+        public string Username { get; set; }
+        public string Filename { get; set; }
+        public string CatName { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace video_editing_api.Service.DbConnection
     {
         IMongoCollection<AppUser> GetUserCollection();
         IMongoCollection<Model.Collection.Category> GetCategoryCollection();
-        IMongoCollection<Model.Collection.Tag> GetTagCollection();
         IMongoCollection<Model.Collection.Video> GetVideoCollection();
     }
 }
