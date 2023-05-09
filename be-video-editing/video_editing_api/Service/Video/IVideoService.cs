@@ -8,8 +8,9 @@ namespace video_editing_api.Service.Video
 {
     public interface IVideoService
     {
-        List<Model.Collection.Video> GetListVideo(string username);
+        List<Model.Collection.Video> GetListVideo();
         void AddVideo(VideoModel model);
         void DeleteVideo(string id);
+        Model.Collection.Video GetById(string id);
     }
 }

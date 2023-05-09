@@ -8,7 +8,7 @@ using video_editing_api.Service.DbConnection;
 
 namespace video_editing_api.Service.Video
 {
-    public class VideoService: IVideoService
+    public class VideoService : IVideoService
     {
         private readonly IMongoCollection<Model.Collection.Video> _video;
 
@@ -17,18 +17,14 @@ namespace video_editing_api.Service.Video
             _video = dbClient.GetVideoCollection();
         }
 
-        public List<Model.Collection.Video> GetListVideo(string username)
-        {
-            return _video.Find(v => v.Username == username).ToList();
-        }
-
         public void AddVideo(VideoModel model)
         {
             Model.Collection.Video video = new Model.Collection.Video();
-            video.Title = model.Title;
-            video.Username = model.Username;
+
             video.Filename = model.Filename;
+            video.FilePath = model.FilePath;
             video.CatName = model.CatName;
+
             _video.InsertOne(video);
         }
 
@@ -37,5 +33,14 @@ namespace video_editing_api.Service.Video
             _video.DeleteOne(v => v.ID == id);
         }
 
+        public List<Model.Collection.Video> GetListVideo()
+        {
+            return _video.Find(v => true).ToList();
+        }
+
+        Model.Collection.Video IVideoService.GetById(string id)
+        {
+            return _video.Find(v => v.ID == id).FirstOrDefault();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,28 +17,67 @@ namespace video_editing_api.Controllers
     public class VideoController : ControllerBase
     {
         private readonly IVideoService _videoService;
+        private readonly IWebHostEnvironment _webHostEnviroment;
 
-        public VideoController(IVideoService videoService)
+        public VideoController(IVideoService videoService, IWebHostEnvironment webHostEnvironment)
         {
             _videoService = videoService;
+            _webHostEnviroment = webHostEnvironment;
         }
-
+        [HttpGet("GetListVideo")]
+        public IActionResult GetListVideo()
+        {
+            return Ok(_videoService.GetListVideo());
+        }
         [HttpPost("Upload")]
-        public ActionResult Upload([FromForm] VideoModel model)
+        public IActionResult Upload(IFormFile video, string catName)
         {
-            IFormFile video = Request.Form.Files["video"];
-            
-            model.Username = User.Identity.Name;
-            model.Filename = video.FileName;
-            _videoService.AddVideo(model);
+            if (video != null && video.Length > 0)
+            {
+                string directoryPath = Path.Combine(_webHostEnviroment.ContentRootPath, "UploadedFiles");
 
-            return RedirectToAction("Display");
+                string filePath = Path.Combine(directoryPath, video.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    video.CopyTo(stream);
+                }
+
+                VideoModel model = new VideoModel();
+                model.Filename = video.FileName;
+                model.FilePath = filePath;
+                model.CatName = catName;
+                _videoService.AddVideo(model);
+
+            }
+            return Ok("Succesfully");
+
         }
 
-        [HttpGet("Display")]
-        public IActionResult Display()
+        [HttpDelete("DeleteViddeo/{id}")]
+        public IActionResult DeleteVideo(string id)
         {
-            return Ok(_videoService.GetListVideo(User.Identity.Name));
+
+            Model.Collection.Video video = new Model.Collection.Video();
+            video = _videoService.GetById(id);
+            FileInfo file = new FileInfo(video.FilePath);
+            if (file.Exists)
+            {
+                file.Delete();
+                _videoService.DeleteVideo(id);
+
+            }
+            return Ok("Delete Successfully");
+        }
+
+        [HttpPost("Download/{id}")]
+        public FileResult Download(string id)
+        {
+
+            Model.Collection.Video video = new Model.Collection.Video();
+            video = _videoService.GetById(id);
+
+            byte[] bytes = System.IO.File.ReadAllBytes(video.FilePath);
+            return File(bytes, "application/octnet-stream", video.Filename);
         }
     }
 }

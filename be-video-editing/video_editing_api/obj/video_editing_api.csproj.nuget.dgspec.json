@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {}
+    "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {
+    "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
+        "projectUniqueName": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
         "projectName": "video_editing_api",
-        "projectPath": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\obj\\",
+        "projectPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
+        "packagesPath": "C:\\Users\\truon\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\truon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -71,8 +75,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -84,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     }

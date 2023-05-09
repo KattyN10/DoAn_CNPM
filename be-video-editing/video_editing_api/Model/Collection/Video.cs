@@ -13,9 +13,8 @@ namespace video_editing_api.Model.Collection
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string ID { get; set; }
-        public string Title { get; set; }
-        public string Username { get; set; }
         public string Filename { get; set; }
+        public string FilePath { get; set; }
         public string CatName { get; set; }
     }
 }
