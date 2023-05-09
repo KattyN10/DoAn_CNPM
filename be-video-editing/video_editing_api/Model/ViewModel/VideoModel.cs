@@ -9,6 +9,7 @@ namespace video_editing_api.Model.ViewModel
     {
         public string Filename { get; set; }
         public string FilePath { get; set; }
-        public string CatName { get; set; }
+        public string CatID { get; set; }
+        public string Title { get; set; }
     }
 }

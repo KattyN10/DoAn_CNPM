@@ -12,5 +12,6 @@ namespace video_editing_api.Service.Video
         void AddVideo(VideoModel model);
         void DeleteVideo(string id);
         Model.Collection.Video GetById(string id);
+        List<Model.Collection.Video> GetVideoByCat(string catID);
     }
 }

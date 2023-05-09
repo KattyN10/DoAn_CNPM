@@ -15,6 +15,7 @@ namespace video_editing_api.Model.Collection
         public string ID { get; set; }
         public string Filename { get; set; }
         public string FilePath { get; set; }
-        public string CatName { get; set; }
+        public string CatID { get; set; }
+        public string Title { get; set; }
     }
 }

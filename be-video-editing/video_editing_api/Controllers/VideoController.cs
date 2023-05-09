@@ -29,8 +29,13 @@ namespace video_editing_api.Controllers
         {
             return Ok(_videoService.GetListVideo());
         }
+        [HttpGet("GetVideoByCat/{id}")]
+        public IActionResult GetVideoByCat(string id)
+        {
+            return Ok(_videoService.GetVideoByCat(id));
+        }
         [HttpPost("Upload")]
-        public IActionResult Upload(IFormFile video, string catName)
+        public IActionResult Upload(IFormFile video, string catID, string title)
         {
             if (video != null && video.Length > 0)
             {
@@ -45,7 +50,8 @@ namespace video_editing_api.Controllers
                 VideoModel model = new VideoModel();
                 model.Filename = video.FileName;
                 model.FilePath = filePath;
-                model.CatName = catName;
+                model.CatID = catID;
+                model.Title = title;
                 _videoService.AddVideo(model);
 
             }

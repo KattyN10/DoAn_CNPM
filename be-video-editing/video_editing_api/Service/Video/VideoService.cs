@@ -23,7 +23,8 @@ namespace video_editing_api.Service.Video
 
             video.Filename = model.Filename;
             video.FilePath = model.FilePath;
-            video.CatName = model.CatName;
+            video.CatID = model.CatID;
+            video.Title = model.Title;
 
             _video.InsertOne(video);
         }
@@ -36,6 +37,11 @@ namespace video_editing_api.Service.Video
         public List<Model.Collection.Video> GetListVideo()
         {
             return _video.Find(v => true).ToList();
+        }
+
+        public List<Model.Collection.Video> GetVideoByCat(string catID)
+        {
+            return _video.Find(v => v.CatID == catID).ToList();
         }
 
         Model.Collection.Video IVideoService.GetById(string id)
