@@ -20,6 +20,9 @@ import './Home.scss';
 import Gallery from '../Gallery/Gallery';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { useNavigate } from "react-router-dom";
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import Cookies from "js-cookie";
 import Dashboard from '../Dashboard/Dashboard';
 import Highlight from '../Highlight/Highlight';
 
@@ -53,6 +56,13 @@ const CustomExpand = React.forwardRef(({ children, onClick }, ref) => (
 
 function Home()
 {
+    const myValue = localStorage.getItem("username");
+    let navigate = useNavigate();
+    const handleLogout = () => {
+      Cookies.remove("Token");
+      localStorage.removeItem("username");
+      navigate("/login");
+    };
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -80,8 +90,8 @@ function Home()
                     direction="row"
                     justifyContent="flex-end"
                     alignItems="center">
-                       <Avatar sx={{ width: 55, height: 55}}>
-                            <PersonIcon sx={{ fontSize: 55 }} />
+                       <Avatar sx={{ width: 55, height: 55,bgcolor: deepOrange[500]}}>
+                            {myValue}
                         </Avatar>
                         <Grid item  ml={5}>
                             <SettingsIcon sx={{ fontSize: 60 }} 
@@ -108,8 +118,7 @@ function Home()
                             >
                               <MenuItem onClick={handleClose}>Dashboard</MenuItem>
                               <MenuItem onClick={handleClose}>Gallery</MenuItem>
-                              <MenuItem onClick={handleClose}>Highlight</MenuItem>
-                              <MenuItem onClick={handleClose}>Logout</MenuItem>
+                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                         </Grid>
                 </Grid>
@@ -118,7 +127,7 @@ function Home()
         <Box className="home-container">
                 <Gallery/>
                 {/* <Dashboard/> */}
-                {/* <Highlight/> */}
+                
         </Box>
          
         </Container>

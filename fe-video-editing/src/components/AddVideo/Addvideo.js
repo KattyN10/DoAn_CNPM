@@ -1,18 +1,58 @@
 import * as React from 'react';
 import "./Addvideo.scss";
-import { Autocomplete, Typography } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
+import {
+    Button,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    IconButton,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+  } from "@mui/material";
+import { useRef } from "react";
 import { createTheme, ThemeProvider} from '@mui/material/styles';
-import Chip from '@mui/material/Chip';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import FormGroup from '@mui/material/FormGroup';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import { FileUploader } from "react-drag-drop-files";
+import CloseIcon from '@mui/icons-material/Close';
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";    
+const TypeFileUploadMatrix = [["PNG"], ["MP4"]];
 
 
+  
+  function BootstrapDialogTitle(props) {
+    const { children, onClose, ...other } = props;
+  
+    return (
+      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        {children}
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+    );
+  }
+  
+  BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+  };
 
 const theme = createTheme({
     palette: {
@@ -27,57 +67,89 @@ const theme = createTheme({
 });
 
 
-function Addvideo()
+function Addvideo(props)
 {
+    const {
+        type,
+        setType,
+        open,
+        handleClose,
+        handleUploadClick,
+        eventName,
+        setEventName,
+        handleFileChange,
+      } = props;
+      const descriptionElementRef = useRef(null);
    return(
     <ThemeProvider theme={theme}>
-        <Box>
-            <Typography align='center' marginBottom={5} variant="h6" component="h5">You don't have any video or image yet
-                <br/>
-                Upload your first video now
-            </Typography>
-            <Box
-                    marginLeft={32}
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    bgcolor='#221E3D'
-                    borderRadius='12px'
-                    boxShadow='2'
-                    width='600px'
-                    height='300px'
-                   >
-                    <Grid style={{
-                        width:600,
-                        height:50,
-                        backgroundColor: "#3D3476",
-                        borderRadius: 20
-                    }}>
-                       <Typography align='center' fontSize={20} mt={1}>Upload Gallery</Typography>
-                    </Grid>
-                    <Grid mt={5} className='Input-Name'> 
-                            <div class="input-group">
-                                <span class="input-group-text">Name</span>
-                                <input type="text" class="form-control"/>
-                            </div>
-                    </Grid>
-                    <Grid>
-                        <div className="input-select">
-                        <label>Type</label>
-                            <select className="select-type mt-4">
-                                    <option selected>Choose</option>
-                                    <option value="1">Video</option>
-                                    <option value="2">Image</option>
-                            </select>
-                        </div>
-                    </Grid>
-                    <Grid mt={5}>
-                        <Button variant="contained" color="success" startIcon={<CloudUploadIcon />}>
-                            Upload or drag video/image here
-                        </Button>
-                    </Grid>
-            </Box>
-        </Box>
+               <Dialog open={open} scroll="paper">
+                    <DialogTitle
+                        sx={{
+                        backgroundColor: "#221E3D",
+                        fontSize: "15px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        }}
+                        id="scroll-dialog-title"
+                    >
+                        <Typography  variant="h5" component="h5" style={{color:"white"}}>Upload Gallery</Typography>
+                        <IconButton  onClick={handleClose} style={{color:"white"}}>
+                            <CancelOutlinedIcon />
+                        </IconButton>
+                    </DialogTitle>
+                    <DialogContent dividers={true}>
+                        <DialogContentText
+                        id="scroll-dialog-description"
+                        ref={descriptionElementRef}
+                        tabIndex={-1}
+                        >
+                        <Grid container spacing={2} width="450px">
+                            <Grid item xs={12}>
+                            <InputLabel>Type</InputLabel>
+                            <Select
+                                value={type}
+                                label="Type"
+                                fullWidth
+                                variant="standard"
+                                onChange={(e) => setType(e.target.value)}
+                            >
+                                <MenuItem value={0}>Kinh tế</MenuItem>
+                                <MenuItem value={1}>Thể thao</MenuItem>
+                            </Select>
+                            </Grid>
+                            <Grid item xs={12}>
+                            <TextField
+                                value={eventName}
+                                label="Name"
+                                variant="standard"
+                                onChange={(e) => setEventName(e.target.value)}
+                                fullWidth
+                            />
+                            </Grid>
+                            <Grid item xs={12}>
+                            <FileUploader
+                                handleChange={handleFileChange}
+                                name="file"
+                                types={TypeFileUploadMatrix[type]}
+                            />
+                            </Grid>
+                            <Grid
+                            item
+                            xs={12}
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                            }}
+                            >
+                            <Button variant="contained">
+                                Upload
+                            </Button>
+                            </Grid>
+                        </Grid>
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
     </ThemeProvider>
     );
 }

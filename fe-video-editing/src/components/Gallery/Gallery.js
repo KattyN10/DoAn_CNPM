@@ -1,34 +1,36 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Addvideo from '../AddVideo/Addvideo';
-import TextField from '@mui/material/TextField';
+
 import './Gallery.scss';
 import Grid from '@mui/material/Grid';
-import { Autocomplete, Typography } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import SearchIcon from '@mui/icons-material/Search';
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
+
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+
 import DeleteIcon from '@mui/icons-material/Delete';
-import ShareIcon from '@mui/icons-material/Share';
+import ReactPlayer from "react-player";
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import InputAdornment from '@mui/material/InputAdornment';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box'
-import CardBox from '../CardBox/CardBox';
 import { alpha } from '@mui/material/styles';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Paper,Typography} from '@mui/material';
+
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
-import Dashboard from '../Dashboard/Dashboard';
+import { useEffect,useState } from 'react';
+import { Image,Popconfirm } from "antd";
+import axios from 'axios';
+import Addvideo from '../AddVideo/Addvideo';
+import bigInt from 'big-integer';
 
-
+const { Title } = Typography;
 
 const theme = createTheme({
     palette: {
@@ -97,16 +99,120 @@ const CustomEdit = React.forwardRef(({ children, onClick }, ref) => (
      
     </i>
   ));
+
+
+
+
+
 function Gallery()
 {
+
+
+  const onPopoverClick = (value) => {
+    if (value === -1) {
+      setViewMode(value);
+    }
+    if (value === 2) {
+      setViewMode(value);
+    }
+    if (value === 1) {
+      const hexString = '64419ae4ce83bf0872f8c5eb';
+      const bigNumber = bigInt(hexString, 16);
+      setViewMode(bigNumber);
+    }
+  };
+  const [noti, setNoti] = useState(false);
+  const [message, setMessage] = useState();
+  const [typeNoti, setTypeNoti] = useState();
+  const [open, setOpen] = useState(false);
+  const [viewMode, setViewMode] = useState(-1);
+  const [gallery, setGallery] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const openSort = Boolean(anchorEl);
+  const [typeAdd, setTypeAdd] = useState(0);
+  const [images, setImages] = useState([]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    setOpen(false);
   };
+
+
+    function download_files(files) {
+      function download_next(i) {
+        if (i >= files?.length) {
+          return;
+        }
+        var link = document.createElement("a");
+        document.body.appendChild(link);
+        link.setAttribute("href", files[i].replace("raw", "download"));
+        link.click();
+
+        // Delete the temporary link.
+        document.body.removeChild(link);
+        // Download the next file with a small timeout. The timeout is necessary
+        // for IE, which will otherwise only download the first file.
+        setTimeout(function () {
+          download_next(i + 1);
+        }, 2000);
+      }
+      // Initiate the first download.
+      download_next(0);
+    }
+
+
+
+    const getGallery = async () => {
+      try {
+        var response = await axios.get(`http://localhost:10386/api/Video/GetListVideo?catID=${viewMode}`);
+        setGallery(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+      getGallery();
+    }, [viewMode]);
+
+    
+
+    const onDownload = (id) =>{
+      const downloadGallery = async() =>{
+        try{
+            await axios.post(`http://localhost:10386/api/Video/Download/${id}`);
+            
+            setMessage("Download Succeed");
+            console.log("Download Succeed")
+        }
+        catch (error){
+            console.log(error);
+        }
+      };
+      downloadGallery();
+    };
+
+    const onDelete = (id) => {
+      const deleteGallery = async () => {
+        try {
+          await axios.delete(`http://localhost:10386/api/Video/DeleteViddeo/${id}`);
+          getGallery();
+          setNoti(true);
+          setMessage("Delete Succeed");
+          setTypeNoti("success");
+          console.log(message);
+        } catch (error) {
+          setNoti(true);
+          setMessage(error.response.data.description);
+          setTypeNoti("error");
+        }
+      };
+      deleteGallery();
+    };
+
+  
 
  
     return(
@@ -116,115 +222,126 @@ function Gallery()
                         My Assets
                     </Grid>
                     <Grid item width={400} height={70} color={"white"}>
-                    <Container maxWidth="md" className='Container-Search-Bar'>
-                    <TextField className='Search-Bar'
-                        id="search"
-                        type="search"
-                        label="Search"
-                        variant="filled"
-                        inputProps={{style:{color:"black",background:"white"}}}
-                        sx={{ width: 300 }}
-                        InputProps={{
-                        startAdornment:(
-                            <InputAdornment position="start">
-                            </InputAdornment>
-                            ),
-                        endAdornment: (
-                            <InputAdornment position="end">
-                            <Button><SearchIcon/></Button>
-                            </InputAdornment>),
-                        }} />
-                    </Container>
+                    
                     </Grid>
                 </Grid>
                 <Grid container ml={8} spacing={2}>
                         <Grid item  md={4}>
-                        <Grid
-                            container
-                            direction="row"
-                            alignItems="center">
-                               <FormControlLabel
-                                  value="selectAll"
-                                  control={<Checkbox   style={{ backgroundColor: "white",marginRight:7,border:30 }}/>}
-                                  label="Select All"
-                                />
-                                <Typography>Selected: 1</Typography>
-                        </Grid>
+                        <Button
+                          id="demo-customized-button"
+                          aria-controls={open ? 'demo-customized-menu' : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          variant="contained"
+                          disableElevation
+                          onClick={handleClick}
+                          endIcon={<UnfoldMoreIcon />}
+                        >
+                          Sort By
+                        </Button>
+                        <StyledMenu
+                          id="demo-customized-menu"
+                          MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                          }}
+                          anchorEl={anchorEl}
+                          open={openSort}
+                          onClose={handleClose}
+                        >
+                           <MenuItem onClick={() => onPopoverClick(-1)} disableRipple>
+                            <LabelImportantIcon/>
+                            All
+                          </MenuItem>
+                          <MenuItem onClick={() => onPopoverClick(2)} disableRipple>
+                            <LabelImportantIcon/>
+                            Kinh tế
+                          </MenuItem>
+                          <MenuItem onClick={() => onPopoverClick(1)} disableRipple>
+                            <FileCopyIcon />
+                            Thể thao
+                          </MenuItem>
+                        </StyledMenu>
 
                         </Grid>
 
                         <Grid item  md={8}>
-                          <Stack direction="row" spacing={2}>
-                              <Button variant="contained" startIcon={<NoteAddIcon />}>
+                          <Stack direction="row" justifyContent="space-evenly"
+                                    alignItems="center" spacing={2}>
+                              <Button variant="contained"   onClick={() => setOpen(true)} startIcon={<NoteAddIcon />}>
                                 Add
                               </Button>
-                              <Button variant="contained" startIcon={<BorderColorIcon />}>
-                                Edit
-                              </Button>
-                              <Button variant="contained" startIcon={<DeleteIcon />}>
-                                Delete
-                              </Button>
-                              <Button variant="contained" startIcon={<ShareIcon />}>
-                                Share
-                              </Button>
-                              <Button variant="contained" startIcon={<DownloadForOfflineIcon />} >
-                                Download
-                              </Button>
+                              <Addvideo
+                                type={typeAdd}
+                                setType={setTypeAdd}
+                                open={open}
+                                handleClose={handleClose}
+                            />
                           </Stack>
                         </Grid>
                 </Grid>
                 <Grid padding={1} ml={8} mt={4}>
-                  <Button
-                    id="demo-customized-button"
-                    aria-controls={open ? 'demo-customized-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    disableElevation
-                    onClick={handleClick}
-                    endIcon={<UnfoldMoreIcon />}
-                  >
-                    Sort By
-                  </Button>
-                  <StyledMenu
-                    id="demo-customized-menu"
-                    MenuListProps={{
-                      'aria-labelledby': 'demo-customized-button',
-                    }}
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <LabelImportantIcon/>
-                      Tags
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <FileCopyIcon />
-                     Categories
-                    </MenuItem>
-                  </StyledMenu>
+                 
                 </Grid>
                 <Box component="main"  sx={{height:450, width:1200,overflow: 'auto'}} mt={2} ml={5} padding={3} container>
                   <Grid container spacing={10}>
-                    <Grid item>
-                      <CardBox/>
-                    </Grid>
-                    <Grid item>
-                      <CardBox/>
-                    </Grid>
-                    <Grid item>
-                      <CardBox/>
-                    </Grid>
-                    <Grid item>
-                      <CardBox/>
-                    </Grid>
-                    <Grid item>
-                      <CardBox/>
-                    </Grid>
-                    <Grid item>
-                      <CardBox/>
-                    </Grid>
+                          {gallery.map(gal =>(
+                            <Grid item>
+                               <Paper
+                                  elevation={3}
+                                  sx={{ width: 300,height:270,backgroundColor: "#3D3476" }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      float:"right",
+                                      justifyContent: "",
+                                    }}
+                                  >
+                                  
+                                    <Stack mr={3} direction="row" justifyContent="space-around"
+                                    alignItems="center" spacing={4}>
+                                    <Popconfirm
+                                      title="Sure to delete?"
+                                      onConfirm={() => onDelete(gal.id)}
+                                    >
+                                       <Button variant="contained">
+                                        <DeleteIcon/>
+                                        </Button>
+                                        
+                                    </Popconfirm>
+                                    <Popconfirm
+                                      title="Sure to edit?"
+                                      onConfirm={() => onDelete(gal.id)}
+                                    >
+                                       <Button variant="contained">
+                                        <BorderColorIcon/>
+                                        </Button>
+                                        
+                                    </Popconfirm>
+                                    <Popconfirm
+                                      title="Sure to download?"
+                                      onConfirm={() => onDownload(gal.id)}
+                                    >
+                                       <Button variant="contained">
+                                        <DownloadForOfflineIcon/>
+                                        </Button>
+                                        
+                                    </Popconfirm>
+
+
+
+                                    </Stack>
+                                  </div>
+                                  <ReactPlayer
+                                    
+                                    url={gal.filename}
+                                    controls
+                                    height="75%"
+                                    width="100%"
+                                      />
+                                </Paper>
+                            </Grid>
+                          ))}
                   </Grid>
                   {/* <Addvideo/> */}
                 </Box>
