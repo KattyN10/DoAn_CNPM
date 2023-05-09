@@ -70,6 +70,7 @@ namespace video_editing_api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "video_editing_api v1"));
             }
             app.UseAuthentication();
+            app.UseCors(_myAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 

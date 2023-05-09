@@ -34,6 +34,15 @@ function Login() {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
 
+  React.useEffect(()=>{
+      const fetchUser = async () =>{
+        const userList = await userApi.getAll();
+        console.log(userList);
+      }
+
+      fetchUser();
+  },[])
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

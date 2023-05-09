@@ -3,23 +3,24 @@ import queryString from "query-string";
 import Cookies from "js-cookie";
 
 const axiosClient = axios.create(
-  {
-    baseURL: 'http://localhost:10386/api/',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    paramsSerializer: (params) => queryString.stringify(params),
-
-  }
+    {
+        baseURL:'http://localhost:8080/api/',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        paramsSerializer: (params) => queryString.stringify(params),
+        
+    }
 )
 axiosClient.interceptors.request.use(async (config) => {
-  //handle token here
-  const token = Cookies.get("Token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+    //handle token here
+    const token = Cookies.get("Token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
 // Add a response interceptor
 axiosClient.interceptors.response.use(
   (response) => {
@@ -29,7 +30,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status == 401) {
+    if (error.response.status === 401) {
       Cookies.remove("Token");
       window.location = "/login";
     }
@@ -38,4 +39,4 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export default axiosClient;
+  export default axiosClient;

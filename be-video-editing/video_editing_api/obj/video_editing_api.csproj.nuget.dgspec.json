@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {}
+    "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {
+    "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
+        "projectUniqueName": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
         "projectName": "video_editing_api",
-        "projectPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
-        "packagesPath": "C:\\Users\\truon\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\DoAn_CNPM\\be-video-editing\\video_editing_api\\obj\\",
+        "projectPath": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPM3\\be-video-editing\\video_editing_api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\truon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,6 +48,10 @@
               "target": "Package",
               "version": "[6.30.0, )"
             },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.18.1, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.19.1, )"
@@ -71,7 +71,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -83,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
