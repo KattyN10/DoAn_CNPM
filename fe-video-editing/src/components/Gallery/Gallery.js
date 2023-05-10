@@ -29,6 +29,7 @@ import { Image,Popconfirm } from "antd";
 import axios from 'axios';
 import Addvideo from '../AddVideo/Addvideo';
 import bigInt from 'big-integer';
+import videoEditingApi from '../../api/videoEditingApi';
 
 const { Title } = Typography;
 
@@ -85,27 +86,25 @@ const StyledMenu = styled((props) => (
 }));
 
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-const CustomEdit = React.forwardRef(({ children, onClick }, ref) => (
-    <i
-        type="button"
-        className="extension ms-4"
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-     
-    </i>
-  ));
-
-
-
-
 
 function Gallery()
 {
+
+
+  const [noti, setNoti] = useState(false);
+  const [message, setMessage] = useState();
+  const [typeNoti, setTypeNoti] = useState();
+  const [open, setOpen] = useState(false);
+  const [viewMode, setViewMode] = useState(-1);
+  const [gallery, setGallery] = useState([]);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openSort = Boolean(anchorEl);
+  const [catId, setCatId] = useState('1');
+  const [title, setTitle] = useState();
+  const [filename, setFilename] = useState();
+  const [filePath, setFilePath] = useState();
+  const [fileVideo, setFileVideo] = useState();
+  const [openBackdrop, setOpenBackdrop] = useState(false);
 
 
   const onPopoverClick = (value) => {
@@ -121,16 +120,61 @@ function Gallery()
       setViewMode(bigNumber);
     }
   };
-  const [noti, setNoti] = useState(false);
-  const [message, setMessage] = useState();
-  const [typeNoti, setTypeNoti] = useState();
-  const [open, setOpen] = useState(false);
-  const [viewMode, setViewMode] = useState(-1);
-  const [gallery, setGallery] = useState([]);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openSort = Boolean(anchorEl);
-  const [typeAdd, setTypeAdd] = useState(0);
-  const [images, setImages] = useState([]);
+
+  const hexString = '64419ae4ce83bf0872f8c5eb';
+  const bigNumber = bigInt(hexString, 16);
+  const handleFileChange = (fileVideo) => {
+    setFileVideo(fileVideo);
+
+    if (catId === 0) {
+      var img = document.createElement("img");
+      img.src = URL.createObjectURL(fileVideo);
+    } 
+  };
+
+  const handleUploadClick = () => {
+    if (!fileVideo || !title || title === "") {
+      setNoti(true);
+      setMessage("Please chose File or enter Name!!");
+      setTypeNoti("error");
+      return;
+    }
+
+
+
+    console.log("upload", fileVideo, catId, title);
+
+    const formData = new FormData();
+    formData.append("catID", catId);
+    formData.append("title", title);
+    formData.append("fileVideo", fileVideo);
+    console.log(formData);
+    const uploadVideo = async () => {
+      try {
+        const upload = await videoEditingApi.uploadVideo(formData);
+        setOpen(false);
+        setOpenBackdrop(false);
+        setNoti(true);
+        setMessage("Upload Succeed");
+        setTypeNoti("success");
+        console.log(gallery.length);
+        getGallery();
+      } catch (error) {
+        setNoti(true);
+        setMessage(error.response.data.description);
+        setTypeNoti("error");
+        setOpenBackdrop(false);
+      }
+    };
+      setOpenBackdrop(true);
+      uploadVideo();
+
+  }
+
+
+
+
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -140,33 +184,10 @@ function Gallery()
   };
 
 
-    function download_files(files) {
-      function download_next(i) {
-        if (i >= files?.length) {
-          return;
-        }
-        var link = document.createElement("a");
-        document.body.appendChild(link);
-        link.setAttribute("href", files[i].replace("raw", "download"));
-        link.click();
-
-        // Delete the temporary link.
-        document.body.removeChild(link);
-        // Download the next file with a small timeout. The timeout is necessary
-        // for IE, which will otherwise only download the first file.
-        setTimeout(function () {
-          download_next(i + 1);
-        }, 2000);
-      }
-      // Initiate the first download.
-      download_next(0);
-    }
-
-
 
     const getGallery = async () => {
       try {
-        var response = await axios.get(`http://localhost:10386/api/Video/GetListVideo?catID=${viewMode}`);
+        var response = await axios.get(`http://localhost:10386/api/Video/GetListVideo?id=1`)
         setGallery(response.data);
         console.log(response.data)
       } catch (error) {
@@ -179,20 +200,7 @@ function Gallery()
 
     
 
-    const onDownload = (id) =>{
-      const downloadGallery = async() =>{
-        try{
-            await axios.post(`http://localhost:10386/api/Video/Download/${id}`);
-            
-            setMessage("Download Succeed");
-            console.log("Download Succeed")
-        }
-        catch (error){
-            console.log(error);
-        }
-      };
-      downloadGallery();
-    };
+   
 
     const onDelete = (id) => {
       const deleteGallery = async () => {
@@ -211,7 +219,6 @@ function Gallery()
       };
       deleteGallery();
     };
-
   
 
  
@@ -268,13 +275,17 @@ function Gallery()
                           <Stack direction="row" justifyContent="space-evenly"
                                     alignItems="center" spacing={2}>
                               <Button variant="contained"   onClick={() => setOpen(true)} startIcon={<NoteAddIcon />}>
-                                Add
+                                Add New Video
                               </Button>
                               <Addvideo
-                                type={typeAdd}
-                                setType={setTypeAdd}
+                                type={bigNumber}
+                                setType={setCatId}
                                 open={open}
                                 handleClose={handleClose}
+                                eventName={title}
+                                setEventName={setTitle}
+                                handleUploadClick={handleUploadClick}
+                                handleFileChange={handleFileChange}
                             />
                           </Stack>
                         </Grid>
@@ -284,7 +295,7 @@ function Gallery()
                 </Grid>
                 <Box component="main"  sx={{height:450, width:1200,overflow: 'auto'}} mt={2} ml={5} padding={3} container>
                   <Grid container spacing={10}>
-                          {gallery.map(gal =>(
+                          {gallery.length > 0 && gallery.map(gal =>(
                             <Grid item>
                                <Paper
                                   elevation={3}
@@ -320,7 +331,7 @@ function Gallery()
                                     </Popconfirm>
                                     <Popconfirm
                                       title="Sure to download?"
-                                      onConfirm={() => onDownload(gal.id)}
+                                      onConfirm
                                     >
                                        <Button variant="contained">
                                         <DownloadForOfflineIcon/>

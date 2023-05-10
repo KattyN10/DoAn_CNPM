@@ -1,11 +1,15 @@
 import axiosClient from "./axiosClient";
 
 
-const videoApi = {
-    getAll: (params)=>{
-        const url = '/Video/GetListVideo';
-        return axiosClient.get(url,params)
-    }
+const videoEditingApi = {
+    getGallery: (catID)=>{
+        const url = `/Video/GetListVideo?id=${catID}`;
+        return axiosClient.get(url)
+    },
+    uploadVideo: (formdata) => {
+        const url = `/Video/Upload`;
+        return axiosClient.post(url, formdata);
+      },
 
 }
-export default videoApi;
+export default videoEditingApi;

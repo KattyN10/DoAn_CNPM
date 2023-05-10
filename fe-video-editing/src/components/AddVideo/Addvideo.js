@@ -21,7 +21,7 @@ import { styled } from '@mui/material/styles';
 import { FileUploader } from "react-drag-drop-files";
 import CloseIcon from '@mui/icons-material/Close';
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";    
-const TypeFileUploadMatrix = [["PNG"], ["MP4"]];
+const TypeFileUploadMatrix = [["MP4"]];
 
 
   
@@ -78,6 +78,7 @@ function Addvideo(props)
         eventName,
         setEventName,
         handleFileChange,
+        
       } = props;
       const descriptionElementRef = useRef(null);
    return(
@@ -106,13 +107,12 @@ function Addvideo(props)
                         >
                         <Grid container spacing={2} width="450px">
                             <Grid item xs={12}>
-                            <InputLabel>Type</InputLabel>
+                            <InputLabel>Category</InputLabel>
                             <Select
-                                value={type}
                                 label="Type"
                                 fullWidth
                                 variant="standard"
-                                onChange={(e) => setType(e.target.value)}
+                               
                             >
                                 <MenuItem value={0}>Kinh tế</MenuItem>
                                 <MenuItem value={1}>Thể thao</MenuItem>
@@ -142,7 +142,7 @@ function Addvideo(props)
                                 justifyContent: "center",
                             }}
                             >
-                            <Button variant="contained">
+                            <Button variant="contained"  onClick={handleUploadClick}>
                                 Upload
                             </Button>
                             </Grid>

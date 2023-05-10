@@ -23,8 +23,7 @@ import Menu from '@mui/material/Menu';
 import { useNavigate } from "react-router-dom";
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import Cookies from "js-cookie";
-import Dashboard from '../Dashboard/Dashboard';
-import Highlight from '../Highlight/Highlight';
+
 
 
 
@@ -126,7 +125,6 @@ function Home()
             </Grid>  
         <Box className="home-container">
                 <Gallery/>
-                {/* <Dashboard/> */}
                 
         </Box>
          

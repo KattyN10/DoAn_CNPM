@@ -7,7 +7,7 @@ const axiosClient = axios.create(
         baseURL:'http://localhost:10386/api/',
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            
         },
         paramsSerializer: (params) => queryString.stringify(params),
         
