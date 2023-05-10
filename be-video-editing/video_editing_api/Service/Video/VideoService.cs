@@ -34,12 +34,7 @@ namespace video_editing_api.Service.Video
             _video.DeleteOne(v => v.ID == id);
         }
 
-        public List<Model.Collection.Video> GetListVideo()
-        {
-            return _video.Find(v => true).ToList();
-        }
-
-        public List<Model.Collection.Video> GetVideoByCat(string catID)
+        public List<Model.Collection.Video> GetListVideo(string catID)
         {
             return _video.Find(v => v.CatID == catID).ToList();
         }

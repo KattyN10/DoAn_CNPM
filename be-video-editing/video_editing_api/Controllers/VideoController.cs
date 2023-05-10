@@ -25,23 +25,20 @@ namespace video_editing_api.Controllers
             _webHostEnviroment = webHostEnvironment;
         }
         [HttpGet("GetListVideo")]
-        public IActionResult GetListVideo()
+        public IActionResult GetListVideo(string id)
         {
-            return Ok(_videoService.GetListVideo());
+            return Ok(_videoService.GetListVideo(id));
         }
-        [HttpGet("GetVideoByCat/{id}")]
-        public IActionResult GetVideoByCat(string id)
-        {
-            return Ok(_videoService.GetVideoByCat(id));
-        }
+
         [HttpPost("Upload")]
-        public IActionResult Upload(IFormFile video, string catID, string title)
+        public IActionResult Upload([FromForm] VideoModel videoModel)
         {
+            IFormFile video = videoModel.fileVideo;
             if (video != null && video.Length > 0)
             {
                 string directoryPath = Path.Combine(_webHostEnviroment.ContentRootPath, "UploadedFiles");
-
                 string filePath = Path.Combine(directoryPath, video.FileName);
+
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     video.CopyTo(stream);
@@ -50,12 +47,12 @@ namespace video_editing_api.Controllers
                 VideoModel model = new VideoModel();
                 model.Filename = video.FileName;
                 model.FilePath = filePath;
-                model.CatID = catID;
-                model.Title = title;
+                model.CatID = videoModel.CatID;
+                model.Title = videoModel.Title;
                 _videoService.AddVideo(model);
 
             }
-            return Ok("Succesfully");
+            return Ok("Upload Successfully");
 
         }
 
