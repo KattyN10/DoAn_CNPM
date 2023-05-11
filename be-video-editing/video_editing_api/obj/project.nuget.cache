@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "giB46H1E0at8c92ouFXhXVhjyPJEJ0a3q47Ic4aWf0pTDPKccRKK+eL6XMliEO17Y31nCdUxkEhhZVN2EmVusA==",
+  "dgSpecHash": "jZnzGCr+3ue+GQ9ksukGfg3AZLP1LjJIdI4kSTZZorpG6fdemQ+ywqtXC2fCjSnKl62eH9Vzq16U0wIEs0o7pw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPMNew\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
+  "projectFilePath": "C:\\Users\\ACER\\Documents\\GitHub\\DoAn_CNPNew2\\be-video-editing\\video_editing_api\\video_editing_api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\aspnetcore.identity.mongodbcore\\3.1.2\\aspnetcore.identity.mongodbcore.3.1.2.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",

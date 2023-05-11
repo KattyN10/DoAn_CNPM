@@ -115,7 +115,7 @@ function Home()
                                 horizontal: 'left',
                               }}
                             >
-                              <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                            
                               <MenuItem onClick={handleClose}>Gallery</MenuItem>
                               <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>

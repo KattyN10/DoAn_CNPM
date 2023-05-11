@@ -19,7 +19,11 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { FileUploader } from "react-drag-drop-files";
 import CloseIcon from '@mui/icons-material/Close';
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";    
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import axios from 'axios';
+import { useEffect,useState } from 'react';
+import { event } from 'jquery';
+import videoEditingApi from '../../api/videoEditingApi';
 const TypeFileUploadMatrix = [["MP4"]];
 
 
@@ -68,18 +72,25 @@ const theme = createTheme({
 
 function EditVideo(props)
 {
+
+  
     const {
-      type,
-      setType,
+      typeAddEdit,
+      setTypeAddEdit,
       open,
       handleClose,
-      handleUploadClick,
-      eventName,
-      setEventName,
-      handleFileChange,
+      handleUpdateClick,
+      eventNameEdit,
+      setEventNameEdit,
+      id,
+      
         
       } = props;
       const descriptionElementRef = useRef(null);
+
+
+  
+
    return(
     <ThemeProvider theme={theme}>
                <Dialog open={open} scroll="paper">
@@ -108,11 +119,11 @@ function EditVideo(props)
                             <Grid item xs={12}>
                             <InputLabel>Category</InputLabel>
                             <Select
-                               value={type}
+                               value={typeAddEdit}
                                label="Type"
                                fullWidth
                                variant="standard"
-                               onChange={(e) => setType(e.target.value)}
+                               onChange={(e) => setTypeAddEdit(e.target.value)}
                                
                             >
                                 <MenuItem value={0}>Kinh tế</MenuItem>
@@ -121,10 +132,10 @@ function EditVideo(props)
                             </Grid>
                             <Grid item xs={12}>
                             <TextField
-                                value={eventName}
+                                value={eventNameEdit}
                                 label="Name"
                                 variant="standard"
-                                onChange={(e) => setEventName(e.target.value)}
+                                onChange={(e) => setEventNameEdit(e.target.value)}
                                 fullWidth
                             />
                             </Grid>
@@ -139,7 +150,7 @@ function EditVideo(props)
                                 justifyContent: "center",
                             }}
                             >
-                            <Button variant="contained"  onClick={handleUploadClick}>
+                            <Button variant="contained"  onClick={handleUpdateClick}>
                                 Update
                             </Button>
                             </Grid>

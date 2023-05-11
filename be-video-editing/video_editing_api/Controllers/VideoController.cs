@@ -123,28 +123,35 @@ namespace video_editing_api.Controllers
             }
         }
 
-       
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditGellary(string id, [FromBody] Gallery gallery)
+        [HttpGet("getGalleryById/{id}")]
+        public  IActionResult getGalleryById(string id)
         {
            
-            if (id != gallery.Id)
-            {
-                return BadRequest();
-            }
+               
+                return Ok(_videoService.getGalleyByID(id));
+            
+           
+        }
 
+
+
+        [HttpPut("updateGallery/{id}")]
+        public async Task<IActionResult> updateGallery(string id, Gallery gallery)
+        {
             try
             {
-                await _videoService.UpdateToGallery(id,gallery);
+                    var res = await _videoService.UpdateToGallery(id, gallery);
+                
+                    return Ok(new Response<string>(200, "", res));
+               
             }
-            catch (InvalidOperationException ex)
+            catch (System.Exception e)
             {
-                return NotFound(ex.Message);
+                return BadRequest(new Response<string>(400, e.Message, null));
             }
-
-            return Ok(gallery);
         }
+
+
 
 
     }

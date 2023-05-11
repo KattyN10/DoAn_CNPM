@@ -90,28 +90,30 @@ function Gallery()
 
   const [viewMode, setViewMode] = useState(-1);
   const [typeAdd, setTypeAdd] = useState(0);
+  const [openBackdropEdit, setOpenBackdropEdit] = useState(false);
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
   const [event, setEvent] = useState();
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-
-  const location = useLocation();
-  const [body, setBody] = useState();
-  const [rowSelected, setRowSelected] = useState();
-  const [hlDescription, setHlDescription] = useState("");
+  
+  const [typeAddEdit, setTypeAddEdit] = useState(0);
+  const [eventNameEdit, setEventNameEdit] = useState();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openSort = Boolean(anchorEl);
+  const [openEdit, setOpenEdit] = useState(false);
 
-
+  
+  const[id,setId] = useState()
 
   const [noti, setNoti] = useState(false);
   const [message, setMessage] = useState();
   const [typeNoti, setTypeNoti] = useState();
 
   const [gallery, setGallery] = useState([]);
+  const [galleryOne, setGalleryOne] = useState([]);
   console.log(gallery);
 
 
@@ -139,7 +141,21 @@ function Gallery()
     document.body.removeChild(a);
   };
 
+  const handleFileChangeEdit = (file) => {
+    setFile(file);
 
+    if (typeAdd === 0) {
+      var img = document.createElement("img");
+      img.onload = function () {
+        setHeight(this.height);
+        setWidth(this.width);
+      };
+      img.src = URL.createObjectURL(file);
+    } else {
+      setHeight(0);
+      setWidth(0);
+    }
+  };
 
   const handleFileChange = (file) => {
     setFile(file);
@@ -174,9 +190,7 @@ function Gallery()
     formData1.append("height", height);
     const SaveToGallery = async () => {
       try {
-        console.log(formData1.get('eventName'));
         const upload = await axios.post('http://localhost:10386/api/Video/SaveToGallery',formData1)
-        console.log("2");
         setOpen(false);
         setOpenBackdrop(false);
         setNoti(true);
@@ -193,6 +207,44 @@ function Gallery()
     setOpenBackdrop(true);
     SaveToGallery();
   };
+
+
+
+  const handleUpdateClick = () => {
+    const formData2 = new FormData();
+
+    console.log(eventNameEdit,typeAddEdit);
+    
+    const data = {
+      event: eventNameEdit,
+      type: typeAddEdit
+    }
+
+
+    formData2.append("event", eventNameEdit);
+    formData2.append("type", typeAddEdit);
+   
+
+    const updateGallery = async () => {
+      try {
+        const update = await axios.put(`http://localhost:10386/api/Video/updateGallery/${galleryOne.id}`, data)
+        setOpenEdit(false);
+        setOpenBackdropEdit(false);
+        setNoti(true);
+        setMessage("Upload Succeed");
+        setTypeNoti("success");
+        getGallery();
+      } catch (error) {
+        setNoti(true);
+        setMessage(error.response.data.description);
+        setTypeNoti("error");
+        setOpenBackdrop(false);
+      }
+    };
+    setOpenBackdropEdit(true);
+    updateGallery();
+  };
+ 
 
   const onDelete = (id) => {
     const deleteGallery = async () => {
@@ -211,6 +263,21 @@ function Gallery()
     deleteGallery();
   };
 
+  const onGetGallery = (id) => {
+    const getGalleryById = async () => {
+      axios.get(`http://localhost:10386/api/Video/getGalleryById/${id}`)
+      .then(response => {
+        const { result } = response.data;
+        setGalleryOne(result);
+        console.log(result);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    };
+    getGalleryById();
+  };
+
 
 
   const handleClick = (event) => {
@@ -219,6 +286,11 @@ function Gallery()
   const handleClose = () => {
     setAnchorEl(null);
     setOpen(false);
+  };
+
+  const handleCloseEdit = () => {
+    setAnchorEl(null);
+    setOpenEdit(false);
   };
 
 
@@ -327,6 +399,7 @@ function Gallery()
                                     }}
                                   >
                                   
+                                  
                                     <Stack mr={3} mt={1} direction="row" justifyContent="space-around"
                                     alignItems="center" spacing={4}>
                                     <Popconfirm
@@ -340,18 +413,28 @@ function Gallery()
                                     </Popconfirm>
                                     <Popconfirm
                                       title="Sure to edit?"
-                                      
+                                      onConfirm={()=>setOpenEdit(true)}
                                     >
-                                       <Button variant="contained" onClick={() => setOpen(true)}>
+                                       <Button variant="contained" onClick={() => onGetGallery(gal.id)}>
                                         <BorderColorIcon/>
                                         </Button>
-                                        <EditVideo
+                                       
+                                          
+                                          <EditVideo
                                             
-                                            open={open}
-                                            handleClose={handleClose}
-                                           
+                                          open = {openEdit}
+                                          handleClose={handleCloseEdit}
+                                          typeAddEdit={typeAddEdit}
+                                          id = {galleryOne.id}
+                                          setTypeAddEdit={setTypeAddEdit}
+                                          eventNameEdit={eventNameEdit}
+                                          setEventNameEdit={setEventNameEdit}
+                                          handleFileChange={handleFileChangeEdit}
+                                          handleUpdateClick={handleUpdateClick}
+                                         
+                                            />
+                                      
                                         
-                                        />
                                     </Popconfirm>
                                     <Popconfirm
                                       title="Sure to download?"
@@ -368,7 +451,7 @@ function Gallery()
 
 
                                     </Stack>
-                                    
+                                   
                                   </div>
                                   <ReactPlayer
                                     

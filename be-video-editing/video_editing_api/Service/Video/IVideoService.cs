@@ -13,11 +13,12 @@ namespace video_editing_api.Service.Video
         List<Model.Collection.Video> GetListVideo(string catID);
         void AddVideo(VideoModel model);
         void DeleteVideo(string id);
+        void updateGallery(string id, Gallery gallery);
         Model.Collection.Video GetById(string id);
         Task<List<Model.Collection.Gallery>> getGalley(string username, int Type);
         Task<string> SaveToGallery(string username, GalleryInput input);
         Task<bool> deleteGallery(string id);
         Task<Gallery> getGalleyByID(string id);
-        Task UpdateToGallery(string id, Gallery gallery);
+        Task<string> UpdateToGallery(string id, Gallery gallery);
     }
 }

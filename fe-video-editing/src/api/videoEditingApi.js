@@ -10,9 +10,18 @@ const videoEditingApi = {
         const url = `/Video/deleteGallery/${id}`;
         return axiosClient.delete(url);
       },
+
+      getGalleryById: (id) => {
+        const url = `/Video/getGalleryById/${id}`;
+        return axiosClient.get(url);
+      },
     downloadOne: (id) =>{
         const url = `http://localhost:10386/api/Video/getGalleryById/${id}`;
         return axiosClient.get(url);
+    },
+    updateGallery: (id)=>{
+        const url = `/Video/updateGallery/${id}`;
+        return axiosClient.put(url);
     }
 
 

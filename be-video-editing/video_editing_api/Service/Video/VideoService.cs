@@ -88,20 +88,18 @@ namespace video_editing_api.Service.Video
                 throw new System.Exception(ex.Message);
             }
         }
-        public async Task UpdateToGallery(string id,Gallery gallery)
+        public async Task<string> UpdateToGallery(string id,Gallery gallery)
         {
             try
             {
-                var gal = await getGalleyByID(gallery.Id);
-
-                if (gal == null)
-                {
-                    throw new InvalidOperationException($"Video with ID not found");
-                }
-
+                var gal = _gallery.Find(x => x.Id == id).First();
+               
                 gal.Event = gallery.Event;
                 gal.Type = gallery.Type;
-
+                
+                
+                await _gallery.ReplaceOneAsync(m => m.Id == id, gal);
+                return "success";
             }
             catch (System.Exception ex)
             {
@@ -146,7 +144,10 @@ namespace video_editing_api.Service.Video
             }
         }
 
-     
+        public void updateGallery(string id, Gallery gallery)
+        {
+             _gallery.ReplaceOneAsync(gallery => gallery.Id == id, gallery);
+        }
 
         public async Task<List<Gallery>> getGalley(string username, int Type)
         {
@@ -182,7 +183,7 @@ namespace video_editing_api.Service.Video
         {
             try
             {
-                return _gallery.Find(v => v.Id == id).FirstOrDefault();
+                return  _gallery.Find(x => x.Id == id).First();
             }
             catch (System.Exception ex)
             {
