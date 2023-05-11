@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-
 import './Gallery.scss';
 import Grid from '@mui/material/Grid';
 
@@ -11,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-
+import { useLocation } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReactPlayer from "react-player";
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -28,10 +27,8 @@ import { useEffect,useState } from 'react';
 import { Image,Popconfirm } from "antd";
 import axios from 'axios';
 import Addvideo from '../AddVideo/Addvideo';
-import bigInt from 'big-integer';
 import videoEditingApi from '../../api/videoEditingApi';
-
-const { Title } = Typography;
+import EditVideo from '../EditVideo/EditVideo';
 
 const theme = createTheme({
     palette: {
@@ -91,73 +88,100 @@ function Gallery()
 {
 
 
+  const [viewMode, setViewMode] = useState(-1);
+  const [typeAdd, setTypeAdd] = useState(0);
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState();
+  const [event, setEvent] = useState();
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  const location = useLocation();
+  const [body, setBody] = useState();
+  const [rowSelected, setRowSelected] = useState();
+  const [hlDescription, setHlDescription] = useState("");
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openSort = Boolean(anchorEl);
+
+
+
   const [noti, setNoti] = useState(false);
   const [message, setMessage] = useState();
   const [typeNoti, setTypeNoti] = useState();
-  const [open, setOpen] = useState(false);
-  const [viewMode, setViewMode] = useState(-1);
-  const [gallery, setGallery] = useState([]);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openSort = Boolean(anchorEl);
-  const [catId, setCatId] = useState('1');
-  const [title, setTitle] = useState();
-  const [filename, setFilename] = useState();
-  const [filePath, setFilePath] = useState();
-  const [fileVideo, setFileVideo] = useState();
-  const [openBackdrop, setOpenBackdrop] = useState(false);
 
+  const [gallery, setGallery] = useState([]);
+  console.log(gallery);
+
+
+ 
 
   const onPopoverClick = (value) => {
     if (value === -1) {
       setViewMode(value);
     }
-    if (value === 2) {
+    if (value === 0) {
       setViewMode(value);
     }
     if (value === 1) {
-      const hexString = '64419ae4ce83bf0872f8c5eb';
-      const bigNumber = bigInt(hexString, 16);
-      setViewMode(bigNumber);
+      setViewMode(value);
+    }
+  };
+  const videoUrl = 'https://store.cads.live/projects/645ca43a0ca7eb6268de320d/raw/video';
+  
+  const handleDownload = () => {
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = 'video.mp4';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+
+
+  const handleFileChange = (file) => {
+    setFile(file);
+
+    if (typeAdd === 0) {
+      var img = document.createElement("img");
+      img.onload = function () {
+        setHeight(this.height);
+        setWidth(this.width);
+      };
+      img.src = URL.createObjectURL(file);
+    } else {
+      setHeight(0);
+      setWidth(0);
     }
   };
 
-  const hexString = '64419ae4ce83bf0872f8c5eb';
-  const bigNumber = bigInt(hexString, 16);
-  const handleFileChange = (fileVideo) => {
-    setFileVideo(fileVideo);
-
-    if (catId === 0) {
-      var img = document.createElement("img");
-      img.src = URL.createObjectURL(fileVideo);
-    } 
-  };
-
   const handleUploadClick = () => {
-    if (!fileVideo || !title || title === "") {
+    if (!file || !event || event === "") {
       setNoti(true);
       setMessage("Please chose File or enter Name!!");
       setTypeNoti("error");
       return;
     }
+    console.log("upload", file, typeAdd, event);
 
-
-
-    console.log("upload", fileVideo, catId, title);
-
-    const formData = new FormData();
-    formData.append("catID", catId);
-    formData.append("title", title);
-    formData.append("fileVideo", fileVideo);
-    console.log(formData);
-    const uploadVideo = async () => {
+    const formData1 = new FormData();
+    formData1.append("eventName", event);
+    formData1.append("file", file);
+    formData1.append("type", typeAdd);
+    formData1.append("width", width);
+    formData1.append("height", height);
+    const SaveToGallery = async () => {
       try {
-        const upload = await videoEditingApi.uploadVideo(formData);
+        console.log(formData1.get('eventName'));
+        const upload = await axios.post('http://localhost:10386/api/Video/SaveToGallery',formData1)
+        console.log("2");
         setOpen(false);
         setOpenBackdrop(false);
         setNoti(true);
         setMessage("Upload Succeed");
         setTypeNoti("success");
-        console.log(gallery.length);
         getGallery();
       } catch (error) {
         setNoti(true);
@@ -166,12 +190,26 @@ function Gallery()
         setOpenBackdrop(false);
       }
     };
-      setOpenBackdrop(true);
-      uploadVideo();
+    setOpenBackdrop(true);
+    SaveToGallery();
+  };
 
-  }
-
-
+  const onDelete = (id) => {
+    const deleteGallery = async () => {
+      try {
+        await videoEditingApi.deleteGallery(id);
+        getGallery();
+        setNoti(true);
+        setMessage("Delete Succeed");
+        setTypeNoti("success");
+      } catch (error) {
+        setNoti(true);
+        setMessage(error.response.data.description);
+        setTypeNoti("error");
+      }
+    };
+    deleteGallery();
+  };
 
 
 
@@ -185,11 +223,11 @@ function Gallery()
 
 
 
+    
     const getGallery = async () => {
       try {
-        var response = await axios.get(`http://localhost:10386/api/Video/GetListVideo?id=1`)
+        var response = await videoEditingApi.getGallery(viewMode);
         setGallery(response.data);
-        console.log(response.data)
       } catch (error) {
         console.log(error);
       }
@@ -199,26 +237,6 @@ function Gallery()
     }, [viewMode]);
 
     
-
-   
-
-    const onDelete = (id) => {
-      const deleteGallery = async () => {
-        try {
-          await axios.delete(`http://localhost:10386/api/Video/DeleteViddeo/${id}`);
-          getGallery();
-          setNoti(true);
-          setMessage("Delete Succeed");
-          setTypeNoti("success");
-          console.log(message);
-        } catch (error) {
-          setNoti(true);
-          setMessage(error.response.data.description);
-          setTypeNoti("error");
-        }
-      };
-      deleteGallery();
-    };
   
 
  
@@ -259,7 +277,7 @@ function Gallery()
                             <LabelImportantIcon/>
                             All
                           </MenuItem>
-                          <MenuItem onClick={() => onPopoverClick(2)} disableRipple>
+                          <MenuItem onClick={() => onPopoverClick(0)} disableRipple>
                             <LabelImportantIcon/>
                             Kinh tế
                           </MenuItem>
@@ -278,14 +296,14 @@ function Gallery()
                                 Add New Video
                               </Button>
                               <Addvideo
-                                type={bigNumber}
-                                setType={setCatId}
-                                open={open}
-                                handleClose={handleClose}
-                                eventName={title}
-                                setEventName={setTitle}
-                                handleUploadClick={handleUploadClick}
-                                handleFileChange={handleFileChange}
+                                  type={typeAdd}
+                                  setType={setTypeAdd}
+                                  open={open}
+                                  handleClose={handleClose}
+                                  handleUploadClick={handleUploadClick}
+                                  eventName={event}
+                                  setEventName={setEvent}
+                                  handleFileChange={handleFileChange}
                             />
                           </Stack>
                         </Grid>
@@ -299,7 +317,7 @@ function Gallery()
                             <Grid item>
                                <Paper
                                   elevation={3}
-                                  sx={{ width: 300,height:270,backgroundColor: "#3D3476" }}
+                                  sx={{ width: 300,height:300,backgroundColor: "#3D3476" }}
                                 >
                                   <div
                                     style={{
@@ -309,7 +327,7 @@ function Gallery()
                                     }}
                                   >
                                   
-                                    <Stack mr={3} direction="row" justifyContent="space-around"
+                                    <Stack mr={3} mt={1} direction="row" justifyContent="space-around"
                                     alignItems="center" spacing={4}>
                                     <Popconfirm
                                       title="Sure to delete?"
@@ -322,39 +340,50 @@ function Gallery()
                                     </Popconfirm>
                                     <Popconfirm
                                       title="Sure to edit?"
-                                      onConfirm={() => onDelete(gal.id)}
+                                      
                                     >
-                                       <Button variant="contained">
+                                       <Button variant="contained" onClick={() => setOpen(true)}>
                                         <BorderColorIcon/>
                                         </Button>
+                                        <EditVideo
+                                            
+                                            open={open}
+                                            handleClose={handleClose}
+                                           
                                         
+                                        />
                                     </Popconfirm>
                                     <Popconfirm
                                       title="Sure to download?"
-                                      onConfirm
+                                      onConfirm 
+                                      
                                     >
                                        <Button variant="contained">
                                         <DownloadForOfflineIcon/>
                                         </Button>
                                         
                                     </Popconfirm>
+                                
 
 
 
                                     </Stack>
+                                    
                                   </div>
                                   <ReactPlayer
                                     
-                                    url={gal.filename}
+                                    url={gal.file_name}
                                     controls
                                     height="75%"
                                     width="100%"
                                       />
+                                    <Typography align='center' mt={6} style={{color:"white"}}>{gal.event}</Typography>
                                 </Paper>
+                                
                             </Grid>
                           ))}
                   </Grid>
-                  {/* <Addvideo/> */}
+        
                 </Box>
         </ThemeProvider>
     );

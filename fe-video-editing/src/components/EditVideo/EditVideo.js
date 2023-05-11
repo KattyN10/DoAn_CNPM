@@ -1,5 +1,4 @@
 import * as React from 'react';
-import "./Addvideo.scss";
 import {
     Button,
     Dialog,
@@ -67,7 +66,7 @@ const theme = createTheme({
 });
 
 
-function Addvideo(props)
+function EditVideo(props)
 {
     const {
       type,
@@ -94,7 +93,7 @@ function Addvideo(props)
                         }}
                         id="scroll-dialog-title"
                     >
-                        <Typography  variant="h5" component="h5" style={{color:"white"}}>Upload Gallery</Typography>
+                        <Typography  variant="h5" component="h5" style={{color:"white"}}>Update Gallery</Typography>
                         <IconButton  onClick={handleClose} style={{color:"white"}}>
                             <CancelOutlinedIcon />
                         </IconButton>
@@ -130,11 +129,7 @@ function Addvideo(props)
                             />
                             </Grid>
                             <Grid item xs={12}>
-                            <FileUploader
-                                handleChange={handleFileChange}
-                                name="file"
-                                types={TypeFileUploadMatrix[type]}
-                            />
+                           
                             </Grid>
                             <Grid
                             item
@@ -145,7 +140,7 @@ function Addvideo(props)
                             }}
                             >
                             <Button variant="contained"  onClick={handleUploadClick}>
-                                Upload
+                                Update
                             </Button>
                             </Grid>
                         </Grid>
@@ -155,4 +150,4 @@ function Addvideo(props)
     </ThemeProvider>
     );
 }
-export default Addvideo;
+export default EditVideo;

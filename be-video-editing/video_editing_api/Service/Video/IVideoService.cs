@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using video_editing_api.Model.Collection;
+using video_editing_api.Model.InputModel;
 using video_editing_api.Model.ViewModel;
 
 namespace video_editing_api.Service.Video
@@ -12,5 +14,10 @@ namespace video_editing_api.Service.Video
         void AddVideo(VideoModel model);
         void DeleteVideo(string id);
         Model.Collection.Video GetById(string id);
+        Task<List<Model.Collection.Gallery>> getGalley(string username, int Type);
+        Task<string> SaveToGallery(string username, GalleryInput input);
+        Task<bool> deleteGallery(string id);
+        Task<Gallery> getGalleyByID(string id);
+        Task UpdateToGallery(string id, Gallery gallery);
     }
 }

@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using video_editing_api.Model.Collection;
+using video_editing_api.Model;
 using video_editing_api.Model.ViewModel;
 using video_editing_api.Service.DbConnection;
 using video_editing_api.Service.Video;
+using video_editing_api.Model.InputModel;
 
 namespace video_editing_api.Controllers
 {
@@ -18,6 +21,7 @@ namespace video_editing_api.Controllers
     {
         private readonly IVideoService _videoService;
         private readonly IWebHostEnvironment _webHostEnviroment;
+        
 
         public VideoController(IVideoService videoService, IWebHostEnvironment webHostEnvironment)
         {
@@ -72,15 +76,76 @@ namespace video_editing_api.Controllers
             return Ok("Delete Successfully");
         }
 
-        [HttpPost("Download/{id}")]
-        public FileResult Download(string id)
+
+        [HttpPost("SaveToGallery")]
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> saveToGallery([FromForm] GalleryInput input)
         {
-
-            Model.Collection.Video video = new Model.Collection.Video();
-            video = _videoService.GetById(id);
-
-            byte[] bytes = System.IO.File.ReadAllBytes(video.FilePath);
-            return File(bytes, "application/octnet-stream", video.Filename);
+            try
+            {
+                var res = await _videoService.SaveToGallery(User.Identity.Name, input);
+                return Ok(new Response<string>(200, "", res));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
         }
+
+       
+        [HttpDelete("deleteGallery/{id}")]
+        public async Task<IActionResult> deleteGallery(string id)
+        {
+            try
+            {
+                var res = await _videoService.deleteGallery(id);
+                return Ok(new Response<bool>(200, "", res));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+        }
+       
+
+
+        [HttpGet("getGallery")]
+        public async Task<IActionResult> getGallery(int type)
+        {
+            try
+            {
+                var res = await _videoService.getGalley(User.Identity.Name, type);
+                return Ok(new Response<List<Gallery>>(200, "", res));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+        }
+
+       
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditGellary(string id, [FromBody] Gallery gallery)
+        {
+           
+            if (id != gallery.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _videoService.UpdateToGallery(id,gallery);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+            return Ok(gallery);
+        }
+
+
     }
 }

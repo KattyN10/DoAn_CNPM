@@ -204,3 +204,6 @@ C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\o
 C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\obj\Debug\net5.0\video_editing_api.pdb
 C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\obj\Debug\net5.0\video_editing_api.genruntimeconfig.cache
 C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\obj\Debug\net5.0\ref\video_editing_api.dll
+C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\ACER\Documents\GitHub\DoAn_CNPMNew\be-video-editing\video_editing_api\bin\Debug\net5.0\AutoMapper.dll

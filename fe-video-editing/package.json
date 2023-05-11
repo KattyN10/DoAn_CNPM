@@ -17,6 +17,7 @@
     "big-integer": "^1.6.51",
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
+    "ffmpeg.js": "^4.2.9003",
     "jquery": "^3.6.4",
     "js-cookie": "^3.0.5",
     "node-sass": "^8.0.0",
