@@ -24,7 +24,7 @@ Yêu cầu phần mểm
 
     Cài đặt docker desktop
 
-    Các bước để tiến hành cài đặt
+Các bước để tiến hành cài đặt
 
 Cách 1:
 
