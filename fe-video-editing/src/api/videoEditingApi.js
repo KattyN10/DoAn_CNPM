@@ -15,10 +15,7 @@ const videoEditingApi = {
         const url = `/Video/getGalleryById/${id}`;
         return axiosClient.get(url);
       },
-    downloadOne: (id) =>{
-        const url = `http://localhost:10386/api/Video/getGalleryById/${id}`;
-        return axiosClient.get(url);
-    },
+    
     updateGallery: (id)=>{
         const url = `/Video/updateGallery/${id}`;
         return axiosClient.put(url);

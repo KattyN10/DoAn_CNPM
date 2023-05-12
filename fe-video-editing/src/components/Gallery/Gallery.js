@@ -190,7 +190,7 @@ function Gallery()
     formData1.append("height", height);
     const SaveToGallery = async () => {
       try {
-        const upload = await axios.post('http://localhost:10386/api/Video/SaveToGallery',formData1)
+        const upload = await axios.post('http://localhost:8080/api/Video/SaveToGallery',formData1)
         setOpen(false);
         setOpenBackdrop(false);
         setNoti(true);
@@ -227,7 +227,7 @@ function Gallery()
 
     const updateGallery = async () => {
       try {
-        const update = await axios.put(`http://localhost:10386/api/Video/updateGallery/${galleryOne.id}`, data)
+        const update = await axios.put(`http://localhost:8080/api/Video/updateGallery/${galleryOne.id}`, data)
         setOpenEdit(false);
         setOpenBackdropEdit(false);
         setNoti(true);
@@ -265,7 +265,7 @@ function Gallery()
 
   const onGetGallery = (id) => {
     const getGalleryById = async () => {
-      axios.get(`http://localhost:10386/api/Video/getGalleryById/${id}`)
+      axios.get(`http://localhost:8080/api/Video/getGalleryById/${id}`)
       .then(response => {
         const { result } = response.data;
         setGalleryOne(result);
