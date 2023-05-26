@@ -273,7 +273,7 @@ function SignUp() {
                </ColorButton>
             <Typography align="center">
                 Already have an Account?
-                <Link href='#' color={"primary.light"} ml={1}>
+                <Link href='/Login' color={"primary.light"} ml={1}>
                     Login
                 </Link>
             </Typography>
